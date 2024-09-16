@@ -9,7 +9,9 @@ import { MdOutlineRestaurantMenu } from 'react-icons/md'
 import logo from '../assets/Pink Y2K K-Pop Merch Store Logo.png'
 
 const Navbar = () => {
-    // const [nav, setNav] = useState(false)
+    
+
+
   return (
     <div className='max-w-[1640px] mx-auto flex justify-between items-center p-4'>
         {/* Left side  */}
@@ -25,13 +27,16 @@ const Navbar = () => {
             </div>
         </div>
         {/* Search Input  */}
-        <div className='bg-gray-200 rounded-full flex items-center px-2 w-[200px] sm:-w-[400px] lg:w-[500px]'>
+        {/* <div className='bg-gray-200 rounded-full flex items-center px-2 w-[200px] sm:-w-[400px] lg:w-[500px]'>
             <AiOutlineSearch sixe={20}/>
-            <input  className='bg-transparent p-2 w-full focus:outline-none' type='text' placeholder='search foods'/>
-        </div>
-        {/* Cart button  */}
+            <input 
+            className='bg-transparent p-2 w-full focus:outline-none' 
+            type='text'
+            placeholder='search'/>
+        </div> */}
+        {/* Menu button  */}
             <a href="https://menu.nowthemenu.com/?name=burger_hut&fbclid=IwY2xjawFR5QNleHRuA2FlbQIxMAABHbnqdYeLChGpA9rcL_stRgUsTpvTpYopkzCPxZUQIgarRXDF7BEM02svWA_aem_bc140_x0potzZRpitiI_qw">
-                <button className='bg-black text-white hidden md:flex items-center py-2'>
+                <button className='bg-black text-white flex items-center py-2'>
                     <MdOutlineRestaurantMenu  size={20} className='mr-2'/>Menu
                 </button>
             </a>

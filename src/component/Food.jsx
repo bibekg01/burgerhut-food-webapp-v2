@@ -1,12 +1,14 @@
 import { useState } from 'react'
 import {burgerData} from './data/burgerData'
+import { AiOutlineSearch } from 'react-icons/ai';
 
 
 const Food = () => {
     const [foods, setFoods] = useState(burgerData);
     const [isActiveButton, setIsActiveButton] = useState(null);
     const [activeButton, setActiveButton] = useState(null)
-
+    const [search, setSearch] = useState("")
+    
     // Filter Type
     const filterType = (category1) => {
         setFoods(
@@ -74,45 +76,52 @@ const Food = () => {
   return (
     <div className='max-w-[1640px] m-auto px-4 py-12'>
         <h1 className='text-orange-600 font-bold text-4xl'>Top Rated Menu items</h1>
-
+        {/* Search Area  */}
+        <div className='grid justify-center py-8'>
+            <div className='bg-gray-200 justify-center rounded-full flex items-center px-2 w-[250px] sm:-w-[400px] lg:w-[500px]'>
+                <AiOutlineSearch sixe={20}/>
+                <input 
+                className='bg-transparent p-2 w-full focus:outline-none' 
+                type='text'
+                value={search}
+                onChange={(e)=> setSearch(e.target.value)}
+                placeholder='search foods'/>
+            </div>
+        </div>
         {/* Filter Row  */}
         <div className='flex flex-col lg:flex-row justify-between'>
             {/* Filter Type  */}
             <div className=''>
                 <p className='font-bold text-gray-700'>Filter Type</p>
-                <div className='flex justify-between flex-wrap max-w-[500px] text-[10px] sm:text-lg'>
+                <div className='flex gap-1 max-w-[500px] text-[10px] sm:text-lg'>
                     <button 
                     onBlur={handleBlur} onClick={() => handleDisplayAll()}
-                    className={`m-1 border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white border ${isActiveButton === 1 ? "bg-orange-500 text-white" : "bg-white text-orange-500"}`}>All</button>
+                    className={` border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white border ${isActiveButton === 1 ? "bg-orange-500 text-white" : "bg-white text-orange-500"}`}>All</button>
+                    <button onClick={() => handleDisplayBestSeller()} onBlur={handleButtonBlur} 
+                    className={` border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white border ${activeButton === 1 ? "bg-orange-500 text-white" : "bg-white text-orange-500"}`}>Best Seller</button>
                     <button 
                     onBlur={handleBlur} onClick={() => handleDisplayVeg()} 
-                    className={`m-1 border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white border ${isActiveButton === 2 ? "bg-orange-500 text-white" : "bg-white text-orange-500"}`}>Veg</button>
+                    className={` border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white border ${isActiveButton === 2 ? "bg-orange-500 text-white" : "bg-white text-orange-500"}`}>Veg</button>
                     <button 
                     onBlur={handleBlur} onClick={() => handleDisplayDNonveg()}
-                     className={`m-1 border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white border ${isActiveButton === 3 ? "bg-orange-500 text-white" : "bg-white text-orange-500"}`}>Non-veg</button>
+                     className={` border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white border ${isActiveButton === 3 ? "bg-orange-500 text-white" : "bg-white text-orange-500"}`}>Non-veg</button>
                     <button 
                     onBlur={handleBlur} onClick={() => 
                         handleDisplayDrinks()} 
-                    className={`m-1 border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white border ${isActiveButton === 4 ? "bg-orange-500 text-white" : "bg-white text-orange-500"}`}>Drinks</button>
+                    className={` border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white border ${isActiveButton === 4 ? "bg-orange-500 text-white" : "bg-white text-orange-500"}`}>Drinks</button>
+
                 </div>
             </div>
 
-            {/* Filter Price  */}
-            <div >
-                <p className='font-bold text-gray-700'>Filter Type</p>
-                <div className='flex justify-between w-full text-[10px] sm:text-lg'>
-                    <button onClick={() => handleDisplayBestSeller()} onBlur={handleButtonBlur} className={`m-1 border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white border ${activeButton === 1 ? "bg-orange-500 text-white" : "bg-white text-orange-500"}`}>Best Seller</button>
-                    <button onClick={() => handleDisplaySpicy()} onBlur={handleButtonBlur} className={`m-1 border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white border ${activeButton === 2 ? "bg-orange-500 text-white" : "bg-white text-orange-500"}`}>Spicy</button>
-                    <button onClick={() => handleDisplayCrunchy()} onBlur={handleButtonBlur} className={`m-1 border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white border ${activeButton === 3 ? "bg-orange-500 text-white" : "bg-white text-orange-500"}`}>Crunchy</button>
-                </div>
-            </div>
         </div>
 
         {/* Display food  */}
         <a href="https://menu.nowthemenu.com/?name=burger_hut&fbclid=IwY2xjawFR5QNleHRuA2FlbQIxMAABHbnqdYeLChGpA9rcL_stRgUsTpvTpYopkzCPxZUQIgarRXDF7BEM02svWA_aem_bc140_x0potzZRpitiI_qw">
 
             <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-4'>
-                {foods.map((item, index) => (
+                {foods.filter((item)=>{
+                    return search.toLowerCase()=== '' ? item : item.title.toLowerCase().includes(search);
+                }).map((item, index) => (
                     <div key={index} className='rounded-lg border shadow-lg hover:scale-105 duration-300'>
                         <img src={item.image} alt={item.title} className='w-full h-[200px] object-cover rounded-t-lg'/>
                         <div className='flex justify-between px-2 py-4'>
